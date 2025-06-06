@@ -1,0 +1,39 @@
+Q 1. Who is the senior most employee based on job title ?
+->
+SELECT * FROM employee
+ORDER BY levels DESC
+LIMIT 1;
+
+Q 2. Which country have the most invoices ?
+->
+SELECT COUNT(*) AS C, billing_country FROM invoice
+GROUP BY billing_country
+ORDER BY C DESC
+LIMIT 1;
+
+Q 3. What are the top 3 values of total invoices ?
+->
+SELECT * FROM invoice
+ORDER BY total DESC
+LIMIT 3;
+
+Q. 4. Which city has the best coustomers ? We would like to throw a promotional music festival in 
+the city we made the most money. Write a query that returns one city that has the highest 
+sum of invoice totals. Return both the city name & sum of all invoice totals.
+->
+SELECT SUM(total) AS invoice_total, billing_city FROM invoice
+GROUP BY billing_city
+ORDER BY invoice_total DESC
+LIMIT 1;
+
+Q. 5. Who is the best customer? The customer who has spent the most money will be declared 
+the best customer. Write a query that returns the person who has spent the most money.
+->
+SELECT C.customer_id, C.first_name, C.last_name, SUM(I.total) AS total 
+FROM customer AS C
+JOIN invoice AS I
+ON C.customer_id = I.customer_id
+GROUP BY C.customer_id
+ORDER BY total DESC
+LIMIT 1;
+
